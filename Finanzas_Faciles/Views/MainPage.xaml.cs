@@ -1,4 +1,4 @@
-﻿namespace Finanzas_Faciles
+﻿namespace Finanzas_Faciles.Views
 {
     public partial class MainPage : ContentPage
     {
