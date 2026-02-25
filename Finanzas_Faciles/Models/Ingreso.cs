@@ -1,4 +1,4 @@
-namespace ProyectoReferencia.Models;
+namespace Finanzas_Faciles.Models;
 
 public class Ingreso
 {
