@@ -12,8 +12,6 @@ public class AppDbContext : DbContext
     public AppDbContext() : this(new DbContextOptionsBuilder<AppDbContext>()
         .UseSqlite($"Filename={DbPath}")
         .Options) { }
-
-    public DbSet<Item> Items => Set<Item>();
     public DbSet<GastoFijo> GastosFijos => Set<GastoFijo>();
     public DbSet<Actividad> Actividades => Set<Actividad>();
     public DbSet<Ingreso> Ingresos => Set<Ingreso>();
@@ -27,13 +25,6 @@ public class AppDbContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<Item>(entity =>
-        {
-            entity.HasKey(e => e.Id);
-            entity.Property(e => e.Titulo).IsRequired().HasMaxLength(200);
-            entity.Property(e => e.Descripcion).HasMaxLength(1000);
-        });
-
         modelBuilder.Entity<GastoFijo>(entity =>
         {
             entity.HasKey(e => e.Id);
