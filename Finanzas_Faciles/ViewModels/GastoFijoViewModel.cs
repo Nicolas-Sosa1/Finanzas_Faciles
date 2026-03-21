@@ -65,6 +65,42 @@ namespace Finanzas_Faciles.ViewModels
             await ActualizarTotalAsync();
         }
 
+        private async Task GuardarAsync()
+        {
+            LimpiarError();
+            if (string.IsNullOrWhiteSpace(Nombre)) { MensajeError = "Debe ingresar el nombre del gasto fijo."; return; }
+            if (string.IsNullOrWhiteSpace(MontoTexto)) { MensajeError = "Debe ingresar el monto mensual."; return; }
+            if (!decimal.TryParse(MontoTexto.Replace(",", "."), System.Globalization.NumberStyles.Any,
+                System.Globalization.CultureInfo.InvariantCulture, out var monto) || monto <= 0)
+            { MensajeError = "El monto debe ser un valor numérico mayor a cero."; return; }
+
+            try
+            {
+                if (EsEdicion)
+                {
+                    var gasto = await _gastoFijoService.ObtenerPorIdAsync(_gastoEnEdicionId);
+                    if (gasto == null) { MensajeError = "Gasto no encontrado."; return; }
+                    gasto.Nombre = Nombre.Trim();
+                    gasto.MontoMensual = monto;
+                    gasto.Categoria = CategoriaSeleccionada;
+                    gasto.Activo = Activo;
+                    await _gastoFijoService.ActualizarAsync(gasto);
+                    var idx = Gastos.ToList().FindIndex(g => g.Id == gasto.Id);
+                    if (idx >= 0) Gastos[idx] = new GastoFijo { Id = gasto.Id, Nombre = gasto.Nombre, MontoMensual = gasto.MontoMensual, Categoria = gasto.Categoria, Activo = gasto.Activo };
+                }
+                else
+                {
+                    var gasto = new GastoFijo { Nombre = Nombre.Trim(), MontoMensual = monto, Categoria = CategoriaSeleccionada, Activo = true };
+                    await _gastoFijoService.AgregarAsync(gasto);
+                    Gastos.Add(gasto);
+                }
+                await ActualizarTotalAsync();
+                LimpiarFormulario();
+                CerrarFormulario();
+            }
+            catch (ValidationException ex) { MensajeError = ex.Message; }
+        }
+
 
     }
 }
