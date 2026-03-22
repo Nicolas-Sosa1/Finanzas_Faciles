@@ -101,6 +101,68 @@ namespace Finanzas_Faciles.ViewModels
             catch (ValidationException ex) { MensajeError = ex.Message; }
         }
 
+        private async Task EliminarAsync(GastoFijo? gasto)
+        {
+            if (gasto == null) return;
+            var page = Application.Current?.Windows?.FirstOrDefault()?.Page;
+            if (page == null) return;
+            var confirmar = await page.DisplayAlert("Confirmar eliminación",
+                $"¿Eliminar el gasto '{gasto.Nombre}'? Esta acción no se puede deshacer.",
+                "Eliminar", "Cancelar");
+            if (!confirmar) return;
+            await _gastoFijoService.EliminarAsync(gasto.Id);
+            Gastos.Remove(gasto);
+            await ActualizarTotalAsync();
+        }
+
+        private void Editar(GastoFijo? gasto)
+        {
+            if (gasto == null) return;
+            _gastoEnEdicionId = gasto.Id;
+            Nombre = gasto.Nombre;
+            MontoTexto = gasto.MontoMensual.ToString("F2", System.Globalization.CultureInfo.InvariantCulture);
+            CategoriaSeleccionada = gasto.Categoria;
+            Activo = gasto.Activo;
+            LimpiarError();
+            MostrarFormulario = true;
+            OnPropertyChanged(nameof(EsEdicion));
+            OnPropertyChanged(nameof(TituloFormulario));
+        }
+
+        private void AbrirFormularioNuevo()
+        {
+            _gastoEnEdicionId = 0;
+            LimpiarFormulario();
+            LimpiarError();
+            MostrarFormulario = true;
+            OnPropertyChanged(nameof(EsEdicion));
+            OnPropertyChanged(nameof(TituloFormulario));
+        }
+
+        private void CerrarFormulario()
+        {
+            MostrarFormulario = false;
+            _gastoEnEdicionId = 0;
+            LimpiarFormulario();
+            LimpiarError();
+            OnPropertyChanged(nameof(EsEdicion));
+            OnPropertyChanged(nameof(TituloFormulario));
+        }
+
+        private void LimpiarFormulario()
+        {
+            Nombre = string.Empty;
+            MontoTexto = string.Empty;
+            CategoriaSeleccionada = CategoriaGastoFijo.Otros;
+            Activo = true;
+        }
+
+        private void LimpiarError() => MensajeError = string.Empty;
+
+        private async Task ActualizarTotalAsync()
+        {
+            TotalCostosFijos = await _gastoFijoService.ObtenerTotalCostosFijosMensualAsync();
+        }
 
     }
 }
