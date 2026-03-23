@@ -25,7 +25,7 @@ namespace Finanzas_Faciles.ViewModels
         private bool _mostrarFormulario;
         private int _gastoEnEdicionId; // 0 = nuevo
 
-        public GastoFijosViewModel(IGastoFijoService gastoFijoService)
+        public GastoFijoViewModel(IGastoFijoService gastoFijoService)
         {
             _gastoFijoService = gastoFijoService;
             Gastos = new ObservableCollection<GastoFijo>();
