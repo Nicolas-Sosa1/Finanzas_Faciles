@@ -4,11 +4,55 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:Finanzas_Faciles.Views"
-    Title="Finanzas_Faciles">
+    Title="Finanzas_Faciles"
+    FlyoutBehavior="Flyout"
+    Shell.FlyoutBackgroundColor="{AppThemeBinding Light={StaticResource FlyoutBackgroundLight}, Dark={StaticResource FlyoutBackgroundDark}}">
 
-    <ShellContent
-        Title="Home"
-        ContentTemplate="{DataTemplate local:MainPage}"
-        Route="MainPage" />
+    <Shell.FlyoutHeader>
+        <Grid HeightRequest="120" Padding="24,48,24,24"
+          BackgroundColor="{AppThemeBinding Light={StaticResource FlyoutHeaderLight}, Dark={StaticResource FlyoutHeaderDark}}">
+            <VerticalStackLayout VerticalOptions="End" Spacing="4">
+                <Label Text="Finanzas Faciles"
+                   FontSize="18"
+                   FontAttributes="Bold"
+                   TextColor="{AppThemeBinding Light={StaticResource TextPrimaryLight}, Dark={StaticResource TextPrimaryDark}}" />
+                <Label Text="Control financiero"
+                   FontSize="12"
+                   Opacity="0.7"
+                   TextColor="{AppThemeBinding Light={StaticResource TextSecondaryLight}, Dark={StaticResource TextSecondaryDark}}" />
+            </VerticalStackLayout>
+        </Grid>
+    </Shell.FlyoutHeader>
+
+    <Shell.ItemTemplate>
+        <DataTemplate>
+            <Grid HeightRequest="52" 
+              Padding="28,0,28,0">
+                <VisualStateManager.VisualStateGroups>
+                    <VisualStateGroupList>
+                        <VisualStateGroup x:Name="CommonStates">
+                            <VisualState x:Name="Normal">
+                                <VisualState.Setters>
+                                    <Setter Property="BackgroundColor" Value="Transparent" />
+                                </VisualState.Setters>
+                            </VisualState>
+                            <VisualState x:Name="Selected">
+                                <VisualState.Setters>
+                                    <Setter Property="BackgroundColor" 
+                                        Value="{AppThemeBinding Light=#F1F5F9, Dark=#1E293B}" />
+                                </VisualState.Setters>
+                            </VisualState>
+                        </VisualStateGroup>
+                    </VisualStateGroupList>
+                </VisualStateManager.VisualStateGroups>
+                <Label Text="{Binding Title}"
+                   FontSize="16"
+                   FontAttributes="None"
+                   VerticalTextAlignment="Center"
+                   VerticalOptions="Center"
+                   TextColor="{AppThemeBinding Light={StaticResource TextPrimaryLight}, Dark={StaticResource TextPrimaryDark}}" />
+            </Grid>
+        </DataTemplate>
+    </Shell.ItemTemplate>
 
 </Shell>
