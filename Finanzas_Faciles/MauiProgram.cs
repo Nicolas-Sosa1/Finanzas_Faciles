@@ -25,9 +25,15 @@ namespace Finanzas_Faciles
 
 #if DEBUG
             builder.Logging.AddDebug();
+
+            var app = builder.Build();
 #endif
 
-            return builder.Build();
+            // Crear la base de datos si no existe (persistencia en FileSystem.AppDataDirectory)
+            var dbService = app.Services.GetRequiredService<DatabaseService>();
+            dbService.InitializeAsync().GetAwaiter().GetResult();
+
+            return app;
         }
     }
 }
