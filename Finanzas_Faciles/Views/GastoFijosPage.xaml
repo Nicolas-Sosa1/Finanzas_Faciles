@@ -32,18 +32,49 @@
                                     </VerticalStackLayout>
                                     <VerticalStackLayout Grid.Column="1" Spacing="4" VerticalOptions="Center">
                                         <Button Text="Editar" Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.EditarCommand}"
-                                             CommandParameter="{Binding .}" Padding="8,4" FontSize="12" />
+                                                CommandParameter="{Binding .}" Padding="8,4" FontSize="12" />
                                         <Button Text="Eliminar" Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.EliminarCommand}"
-                                             CommandParameter="{Binding .}" Padding="8,4" FontSize="12" BackgroundColor="{StaticResource DangerLight}" />
+                                                CommandParameter="{Binding .}" Padding="8,4" FontSize="12" BackgroundColor="{StaticResource DangerLight}" />
                                     </VerticalStackLayout>
                                 </Grid>
                             </Frame>
                         </DataTemplate>
                     </CollectionView.ItemTemplate>
-                    
+                    <CollectionView.EmptyView>
+                        <Label Text="No hay gastos fijos. Agregá uno nuevo." HorizontalOptions="Center" Margin="0,20" Style="{StaticResource MutedLabel}" />
+                    </CollectionView.EmptyView>
                 </CollectionView>
 
+                <Button Text="+ Nuevo gasto fijo" Command="{Binding NuevoCommand}" Margin="0,8,0,0" />
+
+                <!-- Formulario de alta -->
+                <Frame x:DataType="viewmodels:GastoFijosViewModel"
+                       IsVisible="{Binding MostrarFormulario}" Padding="16" HasShadow="True"
+                       BorderColor="{AppThemeBinding Light={StaticResource CardBorderLight}, Dark={StaticResource CardBorderDark}}">
+                    <VerticalStackLayout Spacing="12">
+                        <Label Text="{Binding TituloFormulario}" FontAttributes="Bold" FontSize="18" />
+                        <Entry Placeholder="Nombre del gasto" Text="{Binding Nombre}" />
+                        <Entry Placeholder="Monto mensual (ej: 15000)" Keyboard="Numeric" Text="{Binding MontoTexto}" />
+                        <Label Text="Categoría" FontSize="12" />
+                        <Picker Title="Seleccionar categoría"
+                                ItemsSource="{Binding Categorias}"
+                                SelectedItem="{Binding CategoriaSeleccionada}"
+                                ItemDisplayBinding="{Binding}" />
+                        <HorizontalStackLayout Spacing="12">
+                            <CheckBox IsChecked="{Binding Activo}" VerticalOptions="Center" />
+                            <Label Text="Activo" VerticalOptions="Center" />
+                        </HorizontalStackLayout>
+                        <Label Text="{Binding MensajeError}" TextColor="{AppThemeBinding Light={StaticResource MensajeErrorLight}, Dark={StaticResource MensajeErrorDark}}" IsVisible="{Binding TieneError}" />
+                        <Grid ColumnDefinitions="*,*" ColumnSpacing="8">
+                            <Button Grid.Column="0" Text="Guardar" Command="{Binding GuardarCommand}" />
+                            <Button Grid.Column="1" Text="Cancelar" Command="{Binding CerrarFormularioCommand}"
+                                    BackgroundColor="{AppThemeBinding Light={StaticResource CancelButtonLight}, Dark={StaticResource CancelButtonDark}}" />
+                        </Grid>
+                    </VerticalStackLayout>
+                </Frame>
             </VerticalStackLayout>
         </ScrollView>
     </Grid>
+
 </ContentPage>
+
