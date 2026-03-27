@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodels="clr-namespace:Finanzas_Faciles.ViewModels"
+             xmlns:models="clr-namespace:Finanzas_Faciles.Models"
+             x:Class="Finanzas_Faciles.Views.GastoFijosPage"
+             x:DataType="viewmodels:GastoFijoViewModel"
+             Title="Costos Fijos">
+
+    <Grid RowDefinitions="Auto,*" Padding="20">
+        <!-- RF1.4 - Total de costos fijos -->
+        <Frame Grid.Row="0" Padding="16" Margin="0,0,0,12" HasShadow="True" BackgroundColor="{StaticResource Primary}" BorderColor="Transparent">
+            <VerticalStackLayout Spacing="4">
+                <Label Text="Total costos fijos mensuales" TextColor="White" FontSize="14" />
+                <Label Text="{Binding TotalCostosFijos, StringFormat='{0:C2}'}" TextColor="White" FontSize="24" FontAttributes="Bold" />
+            </VerticalStackLayout>
+        </Frame>
+
+        <ScrollView Grid.Row="1">
+            <VerticalStackLayout Spacing="16">
+                <Label Text="Gastos fijos registrados" Style="{StaticResource SubHeadline}" />
+                <CollectionView x:Name="ListaGastos" ItemsSource="{Binding Gastos}" SelectionMode="None">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate x:DataType="models:GastoFijo">
+                            <Frame Padding="12" Margin="0,4" HasShadow="True">
+                                <Grid ColumnDefinitions="*,Auto" ColumnSpacing="8">
+                                    <VerticalStackLayout Grid.Column="0" Spacing="2">
+                                        <Label Text="{Binding Nombre}" FontAttributes="Bold" />
+                                        <Label Text="{Binding Categoria}" FontSize="12" Style="{StaticResource MutedLabel}" />
+                                        <Label Text="{Binding MontoMensual, StringFormat='{0:C2}/mes'}" FontSize="14" />
+                                        <Label Text="{Binding Activo, Converter={StaticResource BoolToActivoConverter}}" FontSize="12" />
+                                    </VerticalStackLayout>
+                                    <VerticalStackLayout Grid.Column="1" Spacing="4" VerticalOptions="Center">
+                                        <Button Text="Editar" Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.EditarCommand}"
+                                             CommandParameter="{Binding .}" Padding="8,4" FontSize="12" />
+                                        <Button Text="Eliminar" Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.EliminarCommand}"
+                                             CommandParameter="{Binding .}" Padding="8,4" FontSize="12" BackgroundColor="{StaticResource DangerLight}" />
+                                    </VerticalStackLayout>
+                                </Grid>
+                            </Frame>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                    
+                </CollectionView>
+
+            </VerticalStackLayout>
+        </ScrollView>
+    </Grid>
+</ContentPage>
