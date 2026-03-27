@@ -48,7 +48,7 @@
                 <Button Text="+ Nuevo gasto fijo" Command="{Binding NuevoCommand}" Margin="0,8,0,0" />
 
                 <!-- Formulario de alta -->
-                <Frame x:DataType="viewmodels:GastoFijosViewModel"
+                <Frame x:DataType="viewmodels:GastoFijoViewModel"
                        IsVisible="{Binding MostrarFormulario}" Padding="16" HasShadow="True"
                        BorderColor="{AppThemeBinding Light={StaticResource CardBorderLight}, Dark={StaticResource CardBorderDark}}">
                     <VerticalStackLayout Spacing="12">
