@@ -3,7 +3,7 @@
     x:Class="Finanzas_Faciles.AppShell"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:local="clr-namespace:Finanzas_Faciles.Views"
+    xmlns:views="clr-namespace:Finanzas_Faciles.Views"
     Title="Finanzas_Faciles"
     FlyoutBehavior="Flyout"
     Shell.FlyoutBackgroundColor="{AppThemeBinding Light={StaticResource FlyoutBackgroundLight}, Dark={StaticResource FlyoutBackgroundDark}}">
@@ -54,5 +54,10 @@
             </Grid>
         </DataTemplate>
     </Shell.ItemTemplate>
+
+    <FlyoutItem Title="Costos Fijos">
+        <ShellContent ContentTemplate="{DataTemplate views:GastoFijosPage}" Route="GastoFijosPage" />
+    </FlyoutItem>
+
 
 </Shell>

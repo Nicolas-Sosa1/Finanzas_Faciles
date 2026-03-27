@@ -1,6 +1,7 @@
 ﻿using Finanzas_Faciles.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using Finanzas_Faciles.ViewModels;
 
 namespace Finanzas_Faciles
 {
@@ -22,12 +23,15 @@ namespace Finanzas_Faciles
                 options.UseSqlite($"Filename={dbPath}"));
 
             builder.Services.AddSingleton<DatabaseService>();
+            builder.Services.AddSingleton<IGastoFijoService, SqliteGastoFijoService>();
+            builder.Services.AddTransient<GastoFijoViewModel>();
+
 
 #if DEBUG
             builder.Logging.AddDebug();
 
-            var app = builder.Build();
 #endif
+            var app = builder.Build();
 
             // Crear la base de datos si no existe (persistencia en FileSystem.AppDataDirectory)
             var dbService = app.Services.GetRequiredService<DatabaseService>();
