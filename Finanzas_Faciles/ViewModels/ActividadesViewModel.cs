@@ -84,5 +84,76 @@ namespace Finanzas_Faciles.ViewModels
         }
 
 
+        private async Task GuardarAsync()
+        {
+            LimpiarError();
+
+            if (string.IsNullOrWhiteSpace(Nombre)) { MensajeError = "Debe ingresar el nombre de la actividad."; return; }
+            if (string.IsNullOrWhiteSpace(CostoDirectoTexto)) { MensajeError = "Debe ingresar el costo directo."; return; }
+            if (!decimal.TryParse(CostoDirectoTexto.Replace(",", "."), System.Globalization.NumberStyles.Any,
+                System.Globalization.CultureInfo.InvariantCulture, out var costo) || costo <= 0)
+            { MensajeError = "El costo directo debe ser mayor a cero."; return; }
+
+            decimal margen = 0;
+            decimal? precioFijo = null;
+
+            if (ModoPrecio == ModoPrecioActividad.PorMargen)
+            {
+                if (string.IsNullOrWhiteSpace(MargenTexto)) { MensajeError = "Debe ingresar el margen de ganancia."; return; }
+                if (!decimal.TryParse(MargenTexto.Replace(",", "."), System.Globalization.NumberStyles.Any,
+                    System.Globalization.CultureInfo.InvariantCulture, out margen) || margen < 0)
+                { MensajeError = "El margen no puede ser negativo."; return; }
+            }
+            else
+            {
+                if (string.IsNullOrWhiteSpace(PrecioFijoTexto)) { MensajeError = "Debe ingresar el precio de venta."; return; }
+                if (!decimal.TryParse(PrecioFijoTexto.Replace(",", "."), System.Globalization.NumberStyles.Any,
+                    System.Globalization.CultureInfo.InvariantCulture, out var precio) || precio <= 0)
+                { MensajeError = "El precio de venta debe ser mayor a cero."; return; }
+                if (precio < costo)
+                { MensajeError = "El precio de venta no puede ser menor al costo directo."; return; }
+                precioFijo = precio;
+                margen = ((precio - costo) / costo) * 100;
+            }
+
+            try
+            {
+                if (EsEdicion)
+                {
+                    var actividad = await _actividadService.ObtenerPorIdAsync(_actividadEnEdicionId);
+                    if (actividad == null) { MensajeError = "Actividad no encontrada."; return; }
+                    actividad.Nombre = Nombre.Trim();
+                    actividad.CostoDirecto = costo;
+                    actividad.ModoPrecio = ModoPrecio;
+                    actividad.MargenGanancia = margen;
+                    actividad.PrecioVentaFijo = precioFijo;
+                    actividad.Estado = EstadoSeleccionado;
+                    await _actividadService.ActualizarAsync(actividad);
+                    var idx = Actividades.ToList().FindIndex(a => a.Id == actividad.Id);
+                    if (idx >= 0) Actividades[idx] = CrearCopia(actividad);
+                }
+                else
+                {
+                    var actividad = new Actividad
+                    {
+                        Nombre = Nombre.Trim(),
+                        CostoDirecto = costo,
+                        ModoPrecio = ModoPrecio,
+                        MargenGanancia = margen,
+                        PrecioVentaFijo = precioFijo,
+                        Estado = EstadoSeleccionado
+                    };
+                    await _actividadService.AgregarAsync(actividad);
+                    Actividades.Add(actividad);
+                }
+                LimpiarFormulario();
+                CerrarFormulario();
+            }
+            catch (ValidationException ex) { MensajeError = ex.Message; }
+        }
+
+        private void LimpiarError() => MensajeError = string.Empty;
+
+
     }
 }
