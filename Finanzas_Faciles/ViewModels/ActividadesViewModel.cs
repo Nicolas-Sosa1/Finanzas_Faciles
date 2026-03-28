@@ -152,8 +152,6 @@ namespace Finanzas_Faciles.ViewModels
             catch (ValidationException ex) { MensajeError = ex.Message; }
         }
 
-        private void LimpiarError() => MensajeError = string.Empty;
-
 
     }
 }
