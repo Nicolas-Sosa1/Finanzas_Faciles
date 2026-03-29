@@ -152,6 +152,78 @@ namespace Finanzas_Faciles.ViewModels
             catch (ValidationException ex) { MensajeError = ex.Message; }
         }
 
+        private static Actividad CrearCopia(Actividad a) => new()
+        {
+            Id = a.Id,
+            Nombre = a.Nombre,
+            CostoDirecto = a.CostoDirecto,
+            MargenGanancia = a.MargenGanancia,
+            ModoPrecio = a.ModoPrecio,
+            PrecioVentaFijo = a.PrecioVentaFijo,
+            Estado = a.Estado
+        };
+
+        private async Task EliminarAsync(Actividad? actividad)
+        {
+            if (actividad == null) return;
+            var page = Application.Current?.Windows?.FirstOrDefault()?.Page;
+            if (page == null) return;
+            var confirmar = await page.DisplayAlert("Confirmar eliminación",
+                $"¿Eliminar la actividad '{actividad.Nombre}'? Esta acción no se puede deshacer.",
+                "Eliminar", "Cancelar");
+            if (!confirmar) return;
+            await _actividadService.EliminarAsync(actividad.Id);
+            Actividades.Remove(actividad);
+        }
+
+        private void Editar(Actividad? actividad)
+        {
+            if (actividad == null) return;
+            _actividadEnEdicionId = actividad.Id;
+            Nombre = actividad.Nombre;
+            CostoDirectoTexto = actividad.CostoDirecto.ToString("F2", System.Globalization.CultureInfo.InvariantCulture);
+            ModoPrecio = actividad.ModoPrecio;
+            MargenTexto = actividad.MargenGanancia.ToString("F2", System.Globalization.CultureInfo.InvariantCulture);
+            PrecioFijoTexto = actividad.PrecioVentaFijo?.ToString("F2", System.Globalization.CultureInfo.InvariantCulture) ?? string.Empty;
+            EstadoSeleccionado = actividad.Estado;
+            LimpiarError();
+            MostrarFormulario = true;
+            OnPropertyChanged(nameof(EsEdicion));
+            OnPropertyChanged(nameof(TituloFormulario));
+        }
+
+        private void AbrirFormularioNuevo()
+        {
+            _actividadEnEdicionId = 0;
+            ModoPrecio = ModoPrecioActividad.PorMargen;
+            LimpiarFormulario();
+            LimpiarError();
+            MostrarFormulario = true;
+            OnPropertyChanged(nameof(EsEdicion));
+            OnPropertyChanged(nameof(TituloFormulario));
+        }
+
+        private void CerrarFormulario()
+        {
+            MostrarFormulario = false;
+            _actividadEnEdicionId = 0;
+            LimpiarFormulario();
+            LimpiarError();
+            OnPropertyChanged(nameof(EsEdicion));
+            OnPropertyChanged(nameof(TituloFormulario));
+        }
+
+        private void LimpiarFormulario()
+        {
+            Nombre = string.Empty;
+            CostoDirectoTexto = string.Empty;
+            MargenTexto = string.Empty;
+            PrecioFijoTexto = string.Empty;
+            EstadoSeleccionado = EstadoActividad.Activa;
+        }
+
+        private void LimpiarError() => MensajeError = string.Empty;
+
 
     }
 }
