@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodels="clr-namespace:Finanzas_Faciles.ViewModels"
+             xmlns:models="clr-namespace:Finanzas_Faciles.Models"
+             x:Class="Finanzas_Faciles.Views.ActividadesPage"
+             x:DataType="viewmodels:ActividadesViewModel"
+             Title="Catálogo de Actividades">
+
+    <ScrollView Padding="20">
+        <VerticalStackLayout Spacing="16">
+            <Label Text="Actividades (productos/servicios)" Style="{StaticResource SubHeadline}" />
+            <CollectionView ItemsSource="{Binding Actividades}" SelectionMode="None">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="models:Actividad">
+                        <Frame Padding="12" Margin="0,4" HasShadow="True">
+                            <VerticalStackLayout Spacing="4">
+                                <Grid ColumnDefinitions="*,Auto" ColumnSpacing="8">
+                                    <VerticalStackLayout Grid.Column="0" Spacing="4">
+                                        <Label Text="{Binding Nombre}" FontAttributes="Bold" FontSize="16" />
+                                        <Grid ColumnDefinitions="*,*" ColumnSpacing="8">
+                                            <VerticalStackLayout Grid.Column="0" Spacing="2">
+                                                <Label Text="Costo:" FontSize="12" Style="{StaticResource MutedLabel}" />
+                                                <Label Text="{Binding CostoDirecto, StringFormat='{0:C2}'}" />
+                                            </VerticalStackLayout>
+                                            <VerticalStackLayout Grid.Column="1" Spacing="2">
+                                                <Label Text="Margen:" FontSize="12" Style="{StaticResource MutedLabel}" />
+                                                <Label Text="{Binding MargenCalculado, StringFormat='{0}%'}" />
+                                            </VerticalStackLayout>
+                                        </Grid>
+                                        <Frame Padding="8" Margin="0,4,0,0" HasShadow="False"
+                                               BackgroundColor="{AppThemeBinding Light={StaticResource SecondaryTintLight}, Dark={StaticResource SecondaryTintDark}}"
+                                               BorderColor="Transparent">
+                                            <Grid ColumnDefinitions="*,*">
+                                                <VerticalStackLayout Grid.Column="0" Spacing="2">
+                                                    <Label Text="Precio venta" FontSize="11" Style="{StaticResource MutedLabel}" />
+                                                    <Label Text="{Binding PrecioVentaSugerido, StringFormat='{0:C2}'}" FontAttributes="Bold" />
+                                                </VerticalStackLayout>
+                                                <VerticalStackLayout Grid.Column="1" Spacing="2">
+                                                    <Label Text="Utilidad/un." FontSize="11" Style="{StaticResource MutedLabel}" />
+                                                    <Label Text="{Binding UtilidadPorUnidad, StringFormat='{0:C2}'}" FontAttributes="Bold" />
+                                                </VerticalStackLayout>
+                                            </Grid>
+                                        </Frame>
+                                    </VerticalStackLayout>
+                                    <VerticalStackLayout Grid.Column="1" Spacing="4" VerticalOptions="Center">
+                                        <Button Text="Editar" Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.EditarCommand}"
+                                                CommandParameter="{Binding .}" Padding="8,4" FontSize="12" />
+                                        <Button Text="Eliminar" Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.EliminarCommand}"
+                                                CommandParameter="{Binding .}" Padding="8,4" FontSize="12" BackgroundColor="{StaticResource DangerLight}" />
+                                    </VerticalStackLayout>
+                                </Grid>
+                                <Label Text="{Binding Estado}" FontSize="12" Style="{StaticResource MutedLabel}" />
+                            </VerticalStackLayout>
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+                <CollectionView.EmptyView>
+                    <Label Text="No hay actividades. Agregá una nueva." HorizontalOptions="Center" Margin="0,20" Style="{StaticResource MutedLabel}" />
+                </CollectionView.EmptyView>
+            </CollectionView>
+            
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>
