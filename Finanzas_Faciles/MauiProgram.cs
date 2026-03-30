@@ -26,6 +26,10 @@ namespace Finanzas_Faciles
             builder.Services.AddSingleton<IGastoFijoService, SqliteGastoFijoService>();
             builder.Services.AddTransient<GastoFijoViewModel>();
 
+            builder.Services.AddSingleton<IActividadService, SqliteActividadService>();
+            builder.Services.AddTransient<ActividadesViewModel>();
+
+
 
 #if DEBUG
             builder.Logging.AddDebug();

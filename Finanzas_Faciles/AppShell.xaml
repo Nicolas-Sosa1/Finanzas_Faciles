@@ -59,5 +59,10 @@
         <ShellContent ContentTemplate="{DataTemplate views:GastoFijosPage}" Route="GastoFijosPage" />
     </FlyoutItem>
 
+    <FlyoutItem Title="Actividades">
+        <ShellContent ContentTemplate="{DataTemplate views:ActividadesPage}" Route="ActividadesPage" />
+    </FlyoutItem>
+
+
 
 </Shell>

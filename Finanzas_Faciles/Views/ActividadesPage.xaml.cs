@@ -1,7 +1,7 @@
-using ProyectoReferencia.ViewModels;
+using Finanzas_Faciles.ViewModels;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace ProyectoReferencia.Views;
+namespace Finanzas_Faciles.Views;
 
 public partial class ActividadesPage : ContentPage
 {

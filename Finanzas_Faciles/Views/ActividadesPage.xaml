@@ -59,7 +59,42 @@
                     <Label Text="No hay actividades. Agregá una nueva." HorizontalOptions="Center" Margin="0,20" Style="{StaticResource MutedLabel}" />
                 </CollectionView.EmptyView>
             </CollectionView>
-            
+
+            <Button Text="+ Nueva actividad" Command="{Binding NuevoCommand}" Margin="0,8,0,0" />
+
+            <!-- Formulario alta/edición -->
+            <Frame IsVisible="{Binding MostrarFormulario}" Padding="16" HasShadow="True"
+                   BorderColor="{AppThemeBinding Light={StaticResource CardBorderLight}, Dark={StaticResource CardBorderDark}}">
+                <VerticalStackLayout Spacing="12">
+                    <Label Text="{Binding TituloFormulario}" FontAttributes="Bold" FontSize="18" />
+                    <Entry Placeholder="Nombre de la actividad" Text="{Binding Nombre}" />
+                    <Entry Placeholder="Costo directo (ej: 1000)" Keyboard="Numeric" Text="{Binding CostoDirectoTexto}" />
+                    <Label Text="Modo de precio" FontSize="12" />
+                    <Picker Title="Calcular por..."
+                            ItemsSource="{Binding ModosPrecio}"
+                            SelectedItem="{Binding ModoPrecio}"
+                            ItemDisplayBinding="{Binding}" />
+                    <Frame IsVisible="{Binding UsarMargen}" Padding="8" HasShadow="False"
+                           BackgroundColor="{AppThemeBinding Light={StaticResource FormSectionLight}, Dark={StaticResource FormSectionDark}}"
+                           BorderColor="Transparent">
+                        <Entry Placeholder="Margen de ganancia % (ej: 25)" Keyboard="Numeric" Text="{Binding MargenTexto}" />
+                    </Frame>
+                    <Frame IsVisible="{Binding UsarPrecioFijo}" Padding="8" HasShadow="False"
+                           BackgroundColor="{AppThemeBinding Light={StaticResource FormSectionLight}, Dark={StaticResource FormSectionDark}}"
+                           BorderColor="Transparent">
+                        <Entry Placeholder="Precio de venta fijo (ej: 1500)" Keyboard="Numeric" Text="{Binding PrecioFijoTexto}" />
+                    </Frame>
+                    <Label Text="Estado" FontSize="12" />
+                    <Picker Title="Estado" ItemsSource="{Binding Estados}" SelectedItem="{Binding EstadoSeleccionado}" />
+                    <Label Text="{Binding MensajeError}" TextColor="{AppThemeBinding Light={StaticResource MensajeErrorLight}, Dark={StaticResource MensajeErrorDark}}" IsVisible="{Binding TieneError}" />
+                    <Grid ColumnDefinitions="*,*" ColumnSpacing="8">
+                        <Button Grid.Column="0" Text="Guardar" Command="{Binding GuardarCommand}" />
+                        <Button Grid.Column="1" Text="Cancelar" Command="{Binding CerrarFormularioCommand}"
+                                BackgroundColor="{AppThemeBinding Light={StaticResource CancelButtonLight}, Dark={StaticResource CancelButtonDark}}" />
+                    </Grid>
+                </VerticalStackLayout>
+            </Frame>
+
         </VerticalStackLayout>
     </ScrollView>
 
