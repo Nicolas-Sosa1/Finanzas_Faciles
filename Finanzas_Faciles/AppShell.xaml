@@ -55,6 +55,13 @@
         </DataTemplate>
     </Shell.ItemTemplate>
 
+    <FlyoutItem Title="Ingresos">
+        <ShellContent
+        Title="Registro de Ingresos"
+        ContentTemplate="{DataTemplate views:RegistroIngresosPage}"
+        Route="RegistroIngresosPage" />
+    </FlyoutItem>
+
     <FlyoutItem Title="Costos Fijos">
         <ShellContent ContentTemplate="{DataTemplate views:GastoFijosPage}" Route="GastoFijosPage" />
     </FlyoutItem>

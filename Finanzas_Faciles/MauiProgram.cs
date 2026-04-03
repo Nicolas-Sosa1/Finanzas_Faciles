@@ -24,7 +24,9 @@ namespace Finanzas_Faciles
 
             builder.Services.AddSingleton<DatabaseService>();
             builder.Services.AddSingleton<IGastoFijoService, SqliteGastoFijoService>();
+            builder.Services.AddSingleton<IIngresoService, SqliteIngresoService>();
             builder.Services.AddTransient<GastoFijoViewModel>();
+            builder.Services.AddTransient<IngresosViewModel>();
 
             builder.Services.AddSingleton<IActividadService, SqliteActividadService>();
             builder.Services.AddTransient<ActividadesViewModel>();

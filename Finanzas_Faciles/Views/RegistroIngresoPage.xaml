@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodels="clr-namespace:Finanzas_Faciles.ViewModels"
+             xmlns:models="clr-namespace:Finanzas_Faciles.Models"
+             x:Class="Finanzas_Faciles.Views.RegistroIngresosPage"
+             x:DataType="viewmodels:IngresosViewModel"
+             Title="Registro de Ingresos">
+
+    <ScrollView Padding="20">
+        <VerticalStackLayout Spacing="16">
+            <Button Text="+ Nuevo ingreso" Command="{Binding NuevoCommand}" />
+
+            <!-- Formulario RF3 -->
+            <Frame IsVisible="{Binding MostrarFormulario}" Padding="16" HasShadow="True"
+               BorderColor="{AppThemeBinding Light={StaticResource CardBorderLight}, Dark={StaticResource CardBorderDark}}">
+                <VerticalStackLayout Spacing="12">
+                    <Label Text="Registrar ingreso" FontAttributes="Bold" FontSize="18" />
+                    <Label Text="Actividad" FontSize="12" />
+                    <Picker Title="Seleccionar actividad"
+                        ItemsSource="{Binding Actividades}"
+                        SelectedItem="{Binding ActividadSeleccionada}"
+                        ItemDisplayBinding="{Binding Nombre}" />
+                    <Label Text="Cantidad de operaciones" FontSize="12" />
+                    <Entry Placeholder="Ej: 5" Keyboard="Numeric" Text="{Binding CantidadTexto}" />
+                    <Label Text="Fecha" FontSize="12" />
+                    <DatePicker Date="{Binding Fecha}" />
+                    <Label Text="{Binding MensajeError}" TextColor="{AppThemeBinding Light={StaticResource MensajeErrorLight}, Dark={StaticResource MensajeErrorDark}}" IsVisible="{Binding TieneError}" />
+                    <Grid ColumnDefinitions="*,*" ColumnSpacing="8">
+                        <Button Grid.Column="0" Text="Guardar" Command="{Binding GuardarCommand}" />
+                        <Button Grid.Column="1" Text="Cancelar" Command="{Binding CerrarFormularioCommand}"
+                            BackgroundColor="{AppThemeBinding Light={StaticResource CancelButtonLight}, Dark={StaticResource CancelButtonDark}}" />
+                    </Grid>
+                </VerticalStackLayout>
+            </Frame>
+
+            <!-- Historial del periodo -->
+            <Label Text="Ingresos del mes" Style="{StaticResource SubHeadline}" Margin="0,8,0,0" />
+            <CollectionView ItemsSource="{Binding IngresosRecientes}" SelectionMode="None">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="models:Ingreso">
+                        <Frame Padding="12" Margin="0,4" HasShadow="True">
+                            <VerticalStackLayout Spacing="4">
+                                <Label Text="{Binding NombreActividad}" FontAttributes="Bold" />
+                                <Label Text="{Binding Fecha, StringFormat='Fecha: {0:dd/MM/yyyy}'}" FontSize="12" Style="{StaticResource MutedLabel}" />
+                                <Label Text="{Binding Cantidad, StringFormat='Cant: {0}'}" FontSize="12" Style="{StaticResource MutedLabel}" />
+                                <Grid ColumnDefinitions="*,*" ColumnSpacing="8">
+                                    <Label Grid.Column="0" Text="{Binding MontoTotal, StringFormat='Total: {0:C2}'}" FontSize="12" />
+                                    <Label Grid.Column="1" Text="{Binding UtilidadBruta, StringFormat='Util: {0:C2}'}" FontSize="12" FontAttributes="Bold" />
+                                </Grid>
+                                <Label Text="{Binding FondoOperacion, StringFormat='Fondo operación: {0:C2}'}" FontSize="11" Style="{StaticResource MutedLabel}" />
+                            </VerticalStackLayout>
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+                <CollectionView.EmptyView>
+                    <Label Text="No hay ingresos registrados." HorizontalOptions="Center" Margin="0,20" Style="{StaticResource MutedLabel}" />
+                </CollectionView.EmptyView>
+            </CollectionView>
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>
