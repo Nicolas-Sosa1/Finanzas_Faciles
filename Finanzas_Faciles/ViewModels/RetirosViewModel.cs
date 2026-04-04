@@ -94,4 +94,81 @@ public class RetirosViewModel : BaseViewModel
         EfectivoDisponible = estado.EfectivoDisponible;
     }
 
+    private async Task GuardarAsync()
+    {
+        LimpiarError();
+        MensajeExito = string.Empty;
+
+        if (string.IsNullOrWhiteSpace(MontoTexto) ||
+            !decimal.TryParse(MontoTexto.Replace(",", "."), System.Globalization.NumberStyles.Any,
+                System.Globalization.CultureInfo.InvariantCulture, out var monto) || monto <= 0)
+        {
+            MensajeError = "El monto debe ser un valor mayor a cero.";
+            return;
+        }
+
+        if (string.IsNullOrWhiteSpace(Concepto))
+        {
+            MensajeError = "Debe ingresar un concepto o descripción.";
+            return;
+        }
+
+        var resultado = await _retiroService.RegistrarRetiroAsync(monto, Fecha, Concepto.Trim(), false);
+
+        if (resultado.RequiereConfirmacionCapital)
+        {
+            var page = Application.Current?.Windows?.FirstOrDefault()?.Page;
+            var confirmado = page != null && await page.DisplayAlert(
+                "Advertencia",
+                resultado.MensajeError ?? "Este retiro comprometería el capital de operación. ¿Continuar?",
+                "Sí, continuar",
+                "Cancelar");
+
+            if (!confirmado)
+                return;
+
+            resultado = await _retiroService.RegistrarRetiroAsync(monto, Fecha, Concepto.Trim(), true);
+        }
+
+        if (!resultado.Exito)
+        {
+            MensajeError = resultado.MensajeError ?? "Error al registrar el retiro.";
+            return;
+        }
+
+        MensajeExito = $"Retiro registrado: {resultado.Retiro!.TipoRetiro}. Monto: {resultado.Retiro.Monto:C2}.";
+        await CargarDatosAsync();
+        LimpiarFormulario();
+        CerrarFormulario();
+    }
+
+    private void AbrirFormulario()
+    {
+        LimpiarFormulario();
+        LimpiarError();
+        MensajeExito = string.Empty;
+        Fecha = DateTime.Today;
+        MostrarFormulario = true;
+        _ = CargarDatosAsync();
+    }
+
+    private void CerrarFormulario()
+    {
+        MostrarFormulario = false;
+        LimpiarFormulario();
+        LimpiarError();
+    }
+
+    private void LimpiarFormulario()
+    {
+        MontoTexto = string.Empty;
+        Concepto = string.Empty;
+        Fecha = DateTime.Today;
+    }
+
+    private void LimpiarError()
+    {
+        MensajeError = string.Empty;
+    }
+
 }
