@@ -2,9 +2,9 @@ using Finanzas_Faciles.ViewModels;
 namespace Finanzas_Faciles.Views;
 
 
-public partial class RegistroIngresosPage : ContentPage
+public partial class IngresosPage : ContentPage
 {
-    public RegistroIngresosPage()
+    public IngresosPage()
     {
         InitializeComponent();
         CargarViewModel();

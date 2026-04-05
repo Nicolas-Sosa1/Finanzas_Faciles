@@ -58,18 +58,23 @@
     <FlyoutItem Title="Ingresos">
         <ShellContent
         Title="Registro de Ingresos"
-        ContentTemplate="{DataTemplate views:RegistroIngresosPage}"
-        Route="RegistroIngresosPage" />
+        ContentTemplate="{DataTemplate views:IngresosPage}"
+        Route="IngresosPage" />
     </FlyoutItem>
 
     <FlyoutItem Title="Costos Fijos">
-        <ShellContent ContentTemplate="{DataTemplate views:GastoFijosPage}" Route="GastoFijosPage" />
+        <ShellContent ContentTemplate="{DataTemplate views:GastosFijosPage}" Route="GastosFijosPage" />
     </FlyoutItem>
 
     <FlyoutItem Title="Actividades">
         <ShellContent ContentTemplate="{DataTemplate views:ActividadesPage}" Route="ActividadesPage" />
     </FlyoutItem>
 
-
+    <FlyoutItem Title="Retiros">
+        <ShellContent
+            Title="Retiros"
+            ContentTemplate="{DataTemplate views:RetirosPage}"
+            Route="RetirosPage" />
+    </FlyoutItem>
 
 </Shell>

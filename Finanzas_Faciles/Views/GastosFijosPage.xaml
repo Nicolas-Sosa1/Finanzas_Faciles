@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:viewmodels="clr-namespace:Finanzas_Faciles.ViewModels"
              xmlns:models="clr-namespace:Finanzas_Faciles.Models"
-             x:Class="Finanzas_Faciles.Views.GastoFijosPage"
+             x:Class="Finanzas_Faciles.Views.GastosFijosPage"
              x:DataType="viewmodels:GastoFijoViewModel"
              Title="Costos Fijos">
 

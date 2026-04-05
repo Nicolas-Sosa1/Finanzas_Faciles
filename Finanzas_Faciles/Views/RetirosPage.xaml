@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodels="clr-namespace:Finanzas_Faciles.ViewModels"
+             xmlns:models="clr-namespace:Finanzas_Faciles.Models"
+             x:Class="Finanzas_Faciles.Views.RetirosPage"
+             x:DataType="viewmodels:RetirosViewModel"
+             Title="Retiros">
+
+    <ScrollView Padding="20">
+        <VerticalStackLayout Spacing="16">
+            <!-- Efectivo disponible -->
+            <Frame Padding="16" HasShadow="True" BackgroundColor="{StaticResource Primary}" BorderColor="Transparent">
+                <VerticalStackLayout Spacing="4">
+                    <Label Text="Efectivo disponible" TextColor="White" FontSize="14" />
+                    <Label Text="{Binding EfectivoDisponible, StringFormat='{0:C2}'}" TextColor="White" FontSize="22" FontAttributes="Bold" />
+                </VerticalStackLayout>
+            </Frame>
+
+            <Button Text="+ Nuevo retiro" Command="{Binding NuevoCommand}" />
+
+            <!-- Formulario RF5 -->
+            <Frame IsVisible="{Binding MostrarFormulario}" Padding="16" HasShadow="True"
+                   BorderColor="{AppThemeBinding Light={StaticResource CardBorderLight}, Dark={StaticResource CardBorderDark}}">
+                <VerticalStackLayout Spacing="12">
+                    <Label Text="Registrar retiro" FontAttributes="Bold" FontSize="18" />
+                    <Entry Placeholder="Monto a retirar" Keyboard="Numeric" Text="{Binding MontoTexto}" />
+                    <DatePicker Date="{Binding Fecha}" />
+                    <Entry Placeholder="Concepto o descripción" Text="{Binding Concepto}" />
+                    <Label Text="{Binding MensajeError}" TextColor="{AppThemeBinding Light={StaticResource MensajeErrorLight}, Dark={StaticResource MensajeErrorDark}}" IsVisible="{Binding TieneError}" />
+                    <Label Text="{Binding MensajeExito}" TextColor="{AppThemeBinding Light={StaticResource MensajeExitoLight}, Dark={StaticResource MensajeExitoDark}}" />
+                    <Grid ColumnDefinitions="*,*" ColumnSpacing="8">
+                        <Button Grid.Column="0" Text="Guardar" Command="{Binding GuardarCommand}" />
+                        <Button Grid.Column="1" Text="Cancelar" Command="{Binding CerrarFormularioCommand}"
+                                BackgroundColor="{AppThemeBinding Light={StaticResource CancelButtonLight}, Dark={StaticResource CancelButtonDark}}" />
+                    </Grid>
+                </VerticalStackLayout>
+            </Frame>
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>

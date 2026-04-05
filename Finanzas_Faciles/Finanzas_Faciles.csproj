@@ -67,10 +67,25 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <MauiXaml Update="Views\GastoFijosPage.xaml">
+	  <Compile Update="Views\GastosFijosPage.xaml.cs">
+	    <DependentUpon>GastosFijosPage.xaml</DependentUpon>
+	  </Compile>
+	  <Compile Update="Views\IngresosPage.xaml.cs">
+	    <DependentUpon>IngresosPage.xaml</DependentUpon>
+	  </Compile>
+	  <Compile Update="Views\RetirosPage.xaml.cs">
+	    <DependentUpon>RetirosPage.xaml</DependentUpon>
+	  </Compile>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <MauiXaml Update="Views\GastosFijosPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Views\RegistroIngresoPage.xaml">
+	  <MauiXaml Update="Views\RetirosPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\IngresosPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	</ItemGroup>

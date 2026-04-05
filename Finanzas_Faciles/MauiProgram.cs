@@ -23,14 +23,16 @@ namespace Finanzas_Faciles
                 options.UseSqlite($"Filename={dbPath}"));
 
             builder.Services.AddSingleton<DatabaseService>();
+            
             builder.Services.AddSingleton<IGastoFijoService, SqliteGastoFijoService>();
             builder.Services.AddSingleton<IIngresoService, SqliteIngresoService>();
+            builder.Services.AddSingleton<IActividadService, SqliteActividadService>();
+            builder.Services.AddSingleton<IRetiroService, SqliteRetiroService>();
+
             builder.Services.AddTransient<GastoFijoViewModel>();
             builder.Services.AddTransient<IngresosViewModel>();
-
-            builder.Services.AddSingleton<IActividadService, SqliteActividadService>();
-            builder.Services.AddTransient<ActividadesViewModel>();
-
+            builder.Services.AddTransient<ActividadesViewModel>(); 
+            builder.Services.AddTransient<RetirosViewModel>();
 
 
 #if DEBUG

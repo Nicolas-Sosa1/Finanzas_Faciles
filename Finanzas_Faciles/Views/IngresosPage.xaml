@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:viewmodels="clr-namespace:Finanzas_Faciles.ViewModels"
              xmlns:models="clr-namespace:Finanzas_Faciles.Models"
-             x:Class="Finanzas_Faciles.Views.RegistroIngresosPage"
+             x:Class="Finanzas_Faciles.Views.IngresosPage"
              x:DataType="viewmodels:IngresosViewModel"
              Title="Registro de Ingresos">
 
