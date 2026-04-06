@@ -33,7 +33,7 @@ namespace Finanzas_Faciles
             builder.Services.AddTransient<IngresosViewModel>();
             builder.Services.AddTransient<ActividadesViewModel>(); 
             builder.Services.AddTransient<RetirosViewModel>();
-
+            builder.Services.AddTransient<HistorialRetirosViewModel>();
 
 #if DEBUG
             builder.Logging.AddDebug();

@@ -77,4 +77,11 @@
             Route="RetirosPage" />
     </FlyoutItem>
 
+    <FlyoutItem Title="Historial de Retiros">
+        <ShellContent
+            Title="Historial de Retiros"
+            ContentTemplate="{DataTemplate views:HistorialRetirosPage}"
+            Route="HistorialRetirosPage" />
+    </FlyoutItem>
+
 </Shell>
