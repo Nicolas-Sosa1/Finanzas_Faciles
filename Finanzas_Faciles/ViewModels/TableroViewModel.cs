@@ -169,5 +169,76 @@ namespace Finanzas_Faciles.ViewModels
         {
             await ActualizarAsync();
         }
+
+        private async Task ActualizarAsync()
+        {
+            TotalCostosFijos = await _gastoFijoService.ObtenerTotalCostosFijosMensualAsync();
+            UtilidadBrutaAcumulada = await _ingresoService.ObtenerUtilidadBrutaAcumuladaMensualAsync();
+            TotalRetiros = await _retiroService.ObtenerTotalRetiradoAsync();
+            UtilidadReal = UtilidadBrutaAcumulada - TotalRetiros;
+            CostosDirectosAcumulados = await _ingresoService.ObtenerCostosDirectosAcumuladosMensualAsync();
+            SaldoCaja = await _ingresoService.ObtenerSaldoCajaAsync();
+            EfectivoDisponible = SaldoCaja - TotalRetiros;
+
+            CalcularPuntoDeEquilibrio();
+            EvaluarAlertas();
+            await CargarIngresosRecientesAsync();
+
+            ActualizarProgresoCobertura();
+
+            OnPropertyChanged(nameof(TextoPuntoEquilibrio));
+            OnPropertyChanged(nameof(EstadoFinanciero));
+            OnPropertyChanged(nameof(MensajeEstado));
+            OnPropertyChanged(nameof(MostrarAlertaAmarilla));
+        }
+
+        private void CalcularPuntoDeEquilibrio()
+        {
+            ExcedenteOFaltante = UtilidadReal - TotalCostosFijos;
+            TieneExcedente = ExcedenteOFaltante > 0;
+        }
+
+
+        private void ActualizarProgresoCobertura()
+        {
+            ProgresoCobertura = TotalCostosFijos > 0
+                ? Math.Clamp((double)(UtilidadReal / TotalCostosFijos), 0, 1.0)
+                : 0;
+        }
+
+        private void EvaluarAlertas()
+        {
+            SinCostosFijos = TotalCostosFijos == 0;
+
+            if (SinCostosFijos)
+            {
+                MensajeAlerta = "Completá la configuración de costos fijos para habilitar el monitor de salud financiera.";
+                return;
+            }
+
+            // Alerta: efectivo disponible insuficiente para capital de operación
+            if (EfectivoDisponible < CostosDirectosAcumulados && CostosDirectosAcumulados > 0)
+            {
+                MensajeAlerta = "Atención: El efectivo disponible podría ser insuficiente para sostener el capital de operación.";
+                return;
+            }
+
+            if (!TieneExcedente && TotalCostosFijos > 0)
+            {
+                MensajeAlerta = $"La utilidad bruta del período aún no cubre los costos fijos. Falta {Math.Abs(ExcedenteOFaltante):C2}.";
+                return;
+            }
+
+            MensajeAlerta = string.Empty;
+        }
+
+        private async Task CargarIngresosRecientesAsync()
+        {
+            var ingresos = await _ingresoService.ObtenerIngresosDelPeriodoAsync();
+            IngresosRecientes.Clear();
+            foreach (var i in ingresos.Take(10))
+                IngresosRecientes.Add(i);
+        }
+
     }
 }
