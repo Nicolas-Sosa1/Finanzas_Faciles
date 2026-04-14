@@ -83,5 +83,91 @@ namespace Finanzas_Faciles.ViewModels
             get => _progresoCobertura;
             set => SetProperty(ref _progresoCobertura, value);
         }
+
+        /// RF7.4 - Estado financiero: "Fase de Cobertura" o "Ganancia Neta Disponible".
+        public string EstadoFinanciero =>
+            SinCostosFijos ? "Sin configurar" :
+            TieneExcedente ? "Ganancia Neta Disponible" : "Fase de Cobertura";
+
+        /// RF7.4 - Mensaje: monto faltante o excedente disponible.
+        public string MensajeEstado =>
+            SinCostosFijos ? MensajeAlerta :
+            TieneExcedente ? $"Superávit disponible: {ExcedenteOFaltante:C2}" :
+            $"Monto pendiente para equilibrio: {Math.Abs(ExcedenteOFaltante):C2}";
+
+        /// RF4.2 - Costos directos acumulados (capital de trabajo).
+        public decimal CostosDirectosAcumulados
+        {
+            get => _costosDirectosAcumulados;
+            set => SetProperty(ref _costosDirectosAcumulados, value);
+        }
+
+        /// RF3.3 - Saldo total de caja (ingresos).
+        public decimal SaldoCaja
+        {
+            get => _saldoCaja;
+            set => SetProperty(ref _saldoCaja, value);
+        }
+
+        /// RF5.3 - Efectivo disponible
+        public decimal EfectivoDisponible
+        {
+            get => _efectivoDisponible;
+            set => SetProperty(ref _efectivoDisponible, value);
+        }
+
+        /// RF4.4 - Monto: excedente (positivo) o faltante para cubrir costos fijos (negativo).
+        public decimal ExcedenteOFaltante
+        {
+            get => _excedenteOFaltante;
+            set => SetProperty(ref _excedenteOFaltante, value);
+        }
+
+        /// True si hay excedente, False si falta para el punto de equilibrio.
+        public bool TieneExcedente
+        {
+            get => _tieneExcedente;
+            set => SetProperty(ref _tieneExcedente, value);
+        }
+
+        public string TextoPuntoEquilibrio
+        {
+            get => TieneExcedente
+                ? $"Superávit: {ExcedenteOFaltante:C2}"
+                : ExcedenteOFaltante < 0
+                    ? $"Falta: {Math.Abs(ExcedenteOFaltante):C2}"
+                    : "En punto de equilibrio";
+        }
+
+        public string MensajeAlerta
+        {
+            get => _mensajeAlerta;
+            set
+            {
+                SetProperty(ref _mensajeAlerta, value);
+                TieneAlerta = !string.IsNullOrEmpty(value);
+            }
+        }
+
+        public bool TieneAlerta
+        {
+            get => _tieneAlerta;
+            set => SetProperty(ref _tieneAlerta, value);
+        }
+
+        /// RF4.5 - Indica que no hay costos fijos configurados.
+        public bool SinCostosFijos
+        {
+            get => _sinCostosFijos;
+            set => SetProperty(ref _sinCostosFijos, value);
+        }
+
+        /// True cuando hay alerta pero ya hay costos configurados (evita duplicar mensaje "sin configurar").
+        public bool MostrarAlertaAmarilla => TieneAlerta && !SinCostosFijos;
+
+        public async Task CargarDatosAsync()
+        {
+            await ActualizarAsync();
+        }
     }
 }
