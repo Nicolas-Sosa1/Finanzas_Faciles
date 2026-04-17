@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodels="clr-namespace:Finanzas_Faciles.ViewModels"
+             xmlns:models="clr-namespace:Finanzas_Faciles.Models"
+             xmlns:helpers="clr-namespace:Finanzas_Faciles.Helpers"
+             x:Class="Finanzas_Faciles.Views.DashboardPage"
+             x:DataType="viewmodels:TableroViewModel"
+             Title="Dashboard">
+
+    <ScrollView Padding="20">
+        <VerticalStackLayout Spacing="20">
+            <!-- RF7.4 - Efectivo Total Disponible -->
+            <Frame BackgroundColor="{StaticResource Primary}" Padding="24" HasShadow="True" CornerRadius="16" BorderColor="Transparent">
+                <VerticalStackLayout Spacing="8">
+                    <Label Text="EFECTIVO DISPONIBLE" TextColor="White" FontSize="12" Opacity="0.9" />
+                    <Label Text="{Binding EfectivoDisponible, StringFormat='{0:C2}'}" TextColor="White" FontSize="32" FontAttributes="Bold" />
+                </VerticalStackLayout>
+            </Frame>
+
+            <!-- RF7.5 - Estado inactivo cuando no hay costos fijos -->
+            <Frame IsVisible="{Binding SinCostosFijos}"
+                   BackgroundColor="{AppThemeBinding Light={StaticResource InactiveCardLight}, Dark={StaticResource InactiveCardDark}}"
+                   Padding="16" CornerRadius="12" BorderColor="Transparent">
+                <VerticalStackLayout Spacing="8">
+                    <Label Text="Monitor inactivo" FontAttributes="Bold" FontSize="16" />
+                    <Label Text="{Binding MensajeAlerta}" Style="{StaticResource MutedLabel}" />
+                </VerticalStackLayout>
+            </Frame>
+
+            <!-- RF7.4 - Indicador visual de progreso -->
+            <Frame IsVisible="{Binding SinCostosFijos, Converter={StaticResource InvertedBoolConverter}}"
+                   Padding="20" HasShadow="True" CornerRadius="12" BorderColor="Transparent">
+                <VerticalStackLayout Spacing="12">
+                    <Label Text="{Binding EstadoFinanciero}" FontSize="18" FontAttributes="Bold"
+                           TextColor="{Binding TieneExcedente, Converter={StaticResource EstadoToColorConverter}}" />
+                    <ProgressBar Progress="{Binding ProgresoCobertura}"
+                                 ProgressColor="{Binding TieneExcedente, Converter={StaticResource EstadoToColorConverter}}"
+                                 HeightRequest="14" />
+                    <Label Text="{Binding MensajeEstado}" FontSize="14" HorizontalTextAlignment="Center" />
+                </VerticalStackLayout>
+            </Frame>
+
+            <!-- RF4.5 - Alerta operativa -->
+            <Frame IsVisible="{Binding MostrarAlertaAmarilla}"
+                   BackgroundColor="{AppThemeBinding Light={StaticResource WarningCardLight}, Dark={StaticResource WarningCardDark}}"
+                   Padding="12"
+                   BorderColor="{AppThemeBinding Light={StaticResource WarningCardBorderLight}, Dark={StaticResource WarningCardBorderDark}}"
+                   CornerRadius="8">
+                <Label Text="{Binding MensajeAlerta}"
+                       TextColor="{AppThemeBinding Light={StaticResource WarningCardTextLight}, Dark={StaticResource WarningCardTextDark}}" />
+            </Frame>
+
+            
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>

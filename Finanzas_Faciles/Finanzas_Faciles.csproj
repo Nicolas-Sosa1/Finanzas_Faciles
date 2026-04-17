@@ -67,6 +67,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <Compile Update="Views\DashboardPage.xaml.cs">
+	    <DependentUpon>DashboardPage.xaml</DependentUpon>
+	  </Compile>
 	  <Compile Update="Views\GastosFijosPage.xaml.cs">
 	    <DependentUpon>GastosFijosPage.xaml</DependentUpon>
 	  </Compile>
@@ -79,6 +82,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <MauiXaml Update="Views\DashboardPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Views\GastosFijosPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
