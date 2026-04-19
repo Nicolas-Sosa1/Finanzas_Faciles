@@ -55,6 +55,13 @@
         </DataTemplate>
     </Shell.ItemTemplate>
 
+    <FlyoutItem Title="Dashboard">
+        <ShellContent
+            Title="Dashboard"
+            ContentTemplate="{DataTemplate views:DashboardPage}"
+            Route="DashboardPage" />
+    </FlyoutItem>
+
     <FlyoutItem Title="Ingresos">
         <ShellContent
         Title="Registro de Ingresos"
