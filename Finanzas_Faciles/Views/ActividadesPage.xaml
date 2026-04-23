@@ -67,8 +67,8 @@
                    BorderColor="{AppThemeBinding Light={StaticResource CardBorderLight}, Dark={StaticResource CardBorderDark}}">
                 <VerticalStackLayout Spacing="12">
                     <Label Text="{Binding TituloFormulario}" FontAttributes="Bold" FontSize="18" />
-                    <Entry Placeholder="Nombre de la actividad" Text="{Binding Nombre}" />
-                    <Entry Placeholder="Costo directo (ej: 1000)" Keyboard="Numeric" Text="{Binding CostoDirectoTexto}" />
+                    <Entry Placeholder="Nombre de la actividad" Text="{Binding Nombre}" PlaceholderColor="Gray"/>
+                    <Entry Placeholder="Costo directo (ej: 1000)" Keyboard="Numeric" Text="{Binding CostoDirectoTexto}" PlaceholderColor="Gray"/>
                     <Label Text="Modo de precio" FontSize="12" />
                     <Picker Title="Calcular por..."
                             ItemsSource="{Binding ModosPrecio}"
@@ -77,12 +77,12 @@
                     <Frame IsVisible="{Binding UsarMargen}" Padding="8" HasShadow="False"
                            BackgroundColor="{AppThemeBinding Light={StaticResource FormSectionLight}, Dark={StaticResource FormSectionDark}}"
                            BorderColor="Transparent">
-                        <Entry Placeholder="Margen de ganancia % (ej: 25)" Keyboard="Numeric" Text="{Binding MargenTexto}" />
+                        <Entry Placeholder="Margen de ganancia % (ej: 25)" Keyboard="Numeric" Text="{Binding MargenTexto}" PlaceholderColor="Gray"/>
                     </Frame>
                     <Frame IsVisible="{Binding UsarPrecioFijo}" Padding="8" HasShadow="False"
                            BackgroundColor="{AppThemeBinding Light={StaticResource FormSectionLight}, Dark={StaticResource FormSectionDark}}"
                            BorderColor="Transparent">
-                        <Entry Placeholder="Precio de venta fijo (ej: 1500)" Keyboard="Numeric" Text="{Binding PrecioFijoTexto}" />
+                        <Entry Placeholder="Precio de venta fijo (ej: 1500)" Keyboard="Numeric" Text="{Binding PrecioFijoTexto}" PlaceholderColor="Gray"/>
                     </Frame>
                     <Label Text="Estado" FontSize="12" />
                     <Picker Title="Estado" ItemsSource="{Binding Estados}" SelectedItem="{Binding EstadoSeleccionado}" />

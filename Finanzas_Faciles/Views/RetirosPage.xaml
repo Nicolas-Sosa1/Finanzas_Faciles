@@ -24,9 +24,9 @@
                    BorderColor="{AppThemeBinding Light={StaticResource CardBorderLight}, Dark={StaticResource CardBorderDark}}">
                 <VerticalStackLayout Spacing="12">
                     <Label Text="Registrar retiro" FontAttributes="Bold" FontSize="18" />
-                    <Entry Placeholder="Monto a retirar" Keyboard="Numeric" Text="{Binding MontoTexto}" />
+                    <Entry Placeholder="Monto a retirar" Keyboard="Numeric" Text="{Binding MontoTexto}" PlaceholderColor="Gray"/>
                     <DatePicker Date="{Binding Fecha}" />
-                    <Entry Placeholder="Concepto o descripción" Text="{Binding Concepto}" />
+                    <Entry Placeholder="Concepto o descripción" Text="{Binding Concepto}" PlaceholderColor="Gray"/>
                     <Label Text="{Binding MensajeError}" TextColor="{AppThemeBinding Light={StaticResource MensajeErrorLight}, Dark={StaticResource MensajeErrorDark}}" IsVisible="{Binding TieneError}" />
                     <Label Text="{Binding MensajeExito}" TextColor="{AppThemeBinding Light={StaticResource MensajeExitoLight}, Dark={StaticResource MensajeExitoDark}}" />
                     <Grid ColumnDefinitions="*,*" ColumnSpacing="8">

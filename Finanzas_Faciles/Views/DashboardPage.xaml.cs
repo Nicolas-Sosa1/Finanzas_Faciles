@@ -25,4 +25,11 @@ public partial class DashboardPage : ContentPage
                 await vm.CargarDatosAsync();
         };
     }
+
+    protected override async void OnAppearing()
+    {
+        base.OnAppearing();
+        if (BindingContext is TableroViewModel vm)
+            await vm.CargarDatosAsync();
+    }
 }

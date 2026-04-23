@@ -52,9 +52,9 @@
                        IsVisible="{Binding MostrarFormulario}" Padding="16" HasShadow="True"
                        BorderColor="{AppThemeBinding Light={StaticResource CardBorderLight}, Dark={StaticResource CardBorderDark}}">
                     <VerticalStackLayout Spacing="12">
-                        <Label Text="{Binding TituloFormulario}" FontAttributes="Bold" FontSize="18" />
-                        <Entry Placeholder="Nombre del gasto" Text="{Binding Nombre}" />
-                        <Entry Placeholder="Monto mensual (ej: 15000)" Keyboard="Numeric" Text="{Binding MontoTexto}" />
+                        <Label Text="{Binding TituloFormulario}" FontAttributes="Bold" FontSize="18"/>
+                        <Entry Placeholder="Nombre del gasto" Text="{Binding Nombre}"  PlaceholderColor="Gray"/>
+                        <Entry Placeholder="Monto mensual (ej: 15000)" Keyboard="Numeric" Text="{Binding MontoTexto}"  PlaceholderColor="Gray"/>
                         <Label Text="Categoría" FontSize="12" />
                         <Picker Title="Seleccionar categoría"
                                 ItemsSource="{Binding Categorias}"

@@ -22,7 +22,7 @@
                         SelectedItem="{Binding ActividadSeleccionada}"
                         ItemDisplayBinding="{Binding Nombre}" />
                     <Label Text="Cantidad de operaciones" FontSize="12" />
-                    <Entry Placeholder="Ej: 5" Keyboard="Numeric" Text="{Binding CantidadTexto}" />
+                    <Entry Placeholder="Ej: 5" Keyboard="Numeric" Text="{Binding CantidadTexto}"  PlaceholderColor="Gray"/>
                     <Label Text="Fecha" FontSize="12" />
                     <DatePicker Date="{Binding Fecha}" />
                     <Label Text="{Binding MensajeError}" TextColor="{AppThemeBinding Light={StaticResource MensajeErrorLight}, Dark={StaticResource MensajeErrorDark}}" IsVisible="{Binding TieneError}" />
