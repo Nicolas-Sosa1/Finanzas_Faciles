@@ -1,0 +1,43 @@
+<ContentPage 
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="FinanzasFaciles.Views.ExportarPage"
+    Title="Exportar Reportes">
+
+    <VerticalStackLayout Padding="20" Spacing="15">
+
+        
+        <Label Text="Seleccionar período" FontAttributes="Bold"/>
+
+        <Picker 
+            ItemsSource="{Binding MesesDisponibles}"
+            SelectedItem="{Binding MesSeleccionadoItem}" />
+
+        
+        <Button 
+            Text="Exportar a PDF"
+            Command="{Binding ExportarPdfCommand}" />
+
+        <Button 
+            Text="Exportar a Excel"
+            Command="{Binding ExportarExcelCommand}" />
+
+        
+        <Label 
+            Text="{Binding MensajeEstado}"
+            TextColor="Green"
+            IsVisible="{Binding TieneExito}" />
+
+        <Label 
+            Text="{Binding MensajeEstado}"
+            TextColor="Red"
+            IsVisible="{Binding TieneError}" />
+
+        
+        <Button 
+            Text="Compartir último archivo"
+            Command="{Binding CompartirUltimoArchivoCommand}"
+            IsVisible="{Binding MostrarCompartir}" />
+
+    </VerticalStackLayout>
+</ContentPage>

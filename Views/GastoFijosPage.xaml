@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodels="clr-namespace:FinanzasFaciles.ViewModels"
+             xmlns:models="clr-namespace:FinanzasFaciles.Models"
+             x:Class="FinanzasFaciles.Views.GastoFijosPage"
+             x:DataType="viewmodels:GastoFijosViewModel"
+             Title="Costos Fijos">
+
+    <Grid RowDefinitions="Auto,*" Padding="20">
+        
+        <Frame Grid.Row="0" Padding="16" Margin="0,0,0,12" HasShadow="True" BackgroundColor="{StaticResource Primary}" BorderColor="Transparent">
+            <VerticalStackLayout Spacing="4">
+                <Label Text="Total costos fijos mensuales" TextColor="White" FontSize="14" />
+                <Label Text="{Binding TotalCostosFijos, StringFormat='{0:C2}'}" TextColor="White" FontSize="24" FontAttributes="Bold" />
+            </VerticalStackLayout>
+        </Frame>
+
+        <ScrollView Grid.Row="1">
+            <VerticalStackLayout Spacing="16">
+                <Label Text="Gastos fijos registrados" Style="{StaticResource SubHeadline}" />
+                <CollectionView x:Name="ListaGastos" ItemsSource="{Binding Gastos}" SelectionMode="None">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate x:DataType="models:GastoFijo">
+                            <Frame Padding="12" Margin="0,4" HasShadow="True">
+                                <Grid ColumnDefinitions="*,Auto" ColumnSpacing="8">
+                                    <VerticalStackLayout Grid.Column="0" Spacing="2">
+                                        <Label Text="{Binding Nombre}" FontAttributes="Bold" />
+                                        <Label Text="{Binding Categoria}" FontSize="12" Style="{StaticResource MutedLabel}" />
+                                        <Label Text="{Binding MontoMensual, StringFormat='{0:C2}/mes'}" FontSize="14" />
+                                        <Label Text="{Binding Activo, Converter={StaticResource BoolToActivoConverter}}" FontSize="12" />
+                                    </VerticalStackLayout>
+                                    <VerticalStackLayout Grid.Column="1" Spacing="4" VerticalOptions="Center">
+                                        <Button Text="Editar" Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.EditarCommand}"
+                                                CommandParameter="{Binding .}" Padding="8,4" FontSize="12" />
+                                        <Button Text="Eliminar" Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.EliminarCommand}"
+                                                CommandParameter="{Binding .}" Padding="8,4" FontSize="12" BackgroundColor="{StaticResource DangerLight}" />
+                                    </VerticalStackLayout>
+                                </Grid>
+                            </Frame>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                    <CollectionView.EmptyView>
+                        <Label Text="No hay gastos fijos. Agregá uno nuevo." HorizontalOptions="Center" Margin="0,20" Style="{StaticResource MutedLabel}" />
+                    </CollectionView.EmptyView>
+                </CollectionView>
+
+                <Button Text="+ Nuevo gasto fijo" Command="{Binding NuevoCommand}" Margin="0,8,0,0" />
+
+                
+                <Frame x:DataType="viewmodels:GastoFijosViewModel"
+                       IsVisible="{Binding MostrarFormulario}" Padding="16" HasShadow="True"
+                       BorderColor="{AppThemeBinding Light={StaticResource CardBorderLight}, Dark={StaticResource CardBorderDark}}">
+                    <VerticalStackLayout Spacing="12">
+                        <Label Text="{Binding TituloFormulario}" FontAttributes="Bold" FontSize="18" />
+                        <Entry Placeholder="Nombre del gasto" Text="{Binding Nombre}" />
+                        <Entry Placeholder="Monto mensual (ej: 15000)" Keyboard="Numeric" Text="{Binding MontoTexto}" />
+                        <Label Text="Categoría" FontSize="12" />
+                        <Border Style="{StaticResource FormInputOutline}">
+                            <Picker Title=""
+                                    BackgroundColor="Transparent"
+                                    ItemsSource="{Binding Categorias}"
+                                    SelectedItem="{Binding CategoriaSeleccionada}"
+                                    ItemDisplayBinding="{Binding}" />
+                        </Border>
+                        <HorizontalStackLayout Spacing="12">
+                            <CheckBox IsChecked="{Binding Activo}" VerticalOptions="Center" />
+                            <Label Text="Activo" VerticalOptions="Center" />
+                        </HorizontalStackLayout>
+                        <Label Text="{Binding MensajeError}" TextColor="{AppThemeBinding Light={StaticResource MensajeErrorLight}, Dark={StaticResource MensajeErrorDark}}" IsVisible="{Binding TieneError}" />
+                        <Grid ColumnDefinitions="*,*" ColumnSpacing="8">
+                            <Button Grid.Column="0" Text="Guardar" Command="{Binding GuardarCommand}" />
+                            <Button Grid.Column="1" Text="Cancelar" Command="{Binding CerrarFormularioCommand}"
+                                    Style="{StaticResource FormCancelButton}" />
+                        </Grid>
+                    </VerticalStackLayout>
+                </Frame>
+            </VerticalStackLayout>
+        </ScrollView>
+    </Grid>
+
+</ContentPage>

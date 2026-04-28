@@ -1,0 +1,38 @@
+<maui:MauiWinUIApplication
+    x:Class="FinanzasFaciles.WinUI.App"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:maui="using:Microsoft.Maui"
+    xmlns:local="using:FinanzasFaciles.WinUI">
+
+    <maui:MauiWinUIApplication.Resources>
+        <ResourceDictionary>
+            
+            <ResourceDictionary.ThemeDictionaries>
+                <ResourceDictionary x:Key="Light">
+                    <SolidColorBrush x:Key="ComboBoxBackground" Color="#FFFFFFFF" />
+                    <SolidColorBrush x:Key="ComboBoxBackgroundUnfocused" Color="#FFFFFFFF" />
+                    <SolidColorBrush x:Key="ComboBoxBackgroundPointerOver" Color="#FFF5F7F8" />
+                    <SolidColorBrush x:Key="ComboBoxBackgroundPressed" Color="#FFEDEDED" />
+                    <SolidColorBrush x:Key="ComboBoxBackgroundDisabled" Color="#FFEDEDED" />
+                    <SolidColorBrush x:Key="ComboBoxBackgroundFocused" Color="#FFFFFFFF" />
+                    <SolidColorBrush x:Key="ComboBoxForeground" Color="#FF263B53" />
+                    <SolidColorBrush x:Key="ComboBoxForegroundPointerOver" Color="#FF263B53" />
+                    <SolidColorBrush x:Key="ComboBoxForegroundDisabled" Color="#FF7C8894" />
+                    <SolidColorBrush x:Key="ComboBoxBorderBrush" Color="#FFBFC7CE" />
+                    <SolidColorBrush x:Key="SplitButtonBorderBrushPointerOver" Color="#FFBFC7CE" />
+                </ResourceDictionary>
+                <ResourceDictionary x:Key="Dark">
+                    <SolidColorBrush x:Key="ComboBoxBackground" Color="#FF1C2C3E" />
+                    <SolidColorBrush x:Key="ComboBoxBackgroundUnfocused" Color="#FF1C2C3E" />
+                    <SolidColorBrush x:Key="ComboBoxBackgroundPointerOver" Color="#FF263B53" />
+                    <SolidColorBrush x:Key="ComboBoxBackgroundPressed" Color="#FF3A4F68" />
+                    <SolidColorBrush x:Key="ComboBoxBackgroundFocused" Color="#FF263B53" />
+                    <SolidColorBrush x:Key="ComboBoxForeground" Color="#FFF1F4F7" />
+                    <SolidColorBrush x:Key="ComboBoxForegroundPointerOver" Color="#FFF1F4F7" />
+                    <SolidColorBrush x:Key="ComboBoxBorderBrush" Color="#FF3A4F68" />
+                </ResourceDictionary>
+            </ResourceDictionary.ThemeDictionaries>
+        </ResourceDictionary>
+    </maui:MauiWinUIApplication.Resources>
+</maui:MauiWinUIApplication>

@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodels="clr-namespace:FinanzasFaciles.ViewModels"
+             xmlns:models="clr-namespace:FinanzasFaciles.Models"
+             xmlns:helpers="clr-namespace:FinanzasFaciles.Helpers"
+             x:Class="FinanzasFaciles.Views.DashboardPage"
+             x:DataType="viewmodels:TableroViewModel"
+             Title="Dashboard">
+
+    <ScrollView Padding="20">
+        <VerticalStackLayout Spacing="20">
+            
+            <Frame BackgroundColor="{StaticResource BrandDarkBlue}" Padding="24" HasShadow="True" CornerRadius="16" BorderColor="Transparent">
+                <Grid ColumnDefinitions="*,Auto" VerticalOptions="Center">
+                    <VerticalStackLayout Grid.Column="0" Spacing="8">
+                        <Label Text="EFECTIVO DISPONIBLE" TextColor="White" FontSize="12" Opacity="0.85" />
+                        <Label Text="{Binding EfectivoDisponible, StringFormat='{0:C2}'}" TextColor="White" FontSize="32" FontAttributes="Bold" />
+                    </VerticalStackLayout>
+                    <Border Grid.Column="1"
+                            WidthRequest="48" HeightRequest="48"
+                            StrokeThickness="0"
+                            BackgroundColor="White"
+                            VerticalOptions="Center">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="10" />
+                        </Border.StrokeShape>
+                        <Image Source="logo_finanzas.jpg" Aspect="AspectFit" Margin="4" />
+                    </Border>
+                </Grid>
+            </Frame>
+
+            
+            <Frame IsVisible="{Binding SinCostosFijos}"
+                   BackgroundColor="{AppThemeBinding Light={StaticResource InactiveCardLight}, Dark={StaticResource InactiveCardDark}}"
+                   Padding="16" CornerRadius="12" BorderColor="Transparent">
+                <VerticalStackLayout Spacing="8">
+                    <Label Text="Monitor inactivo" FontAttributes="Bold" FontSize="16" />
+                    <Label Text="{Binding MensajeAlerta}" Style="{StaticResource MutedLabel}" />
+                </VerticalStackLayout>
+            </Frame>
+
+            
+            <Frame IsVisible="{Binding SinCostosFijos, Converter={StaticResource InvertedBoolConverter}}"
+                   Padding="20" HasShadow="True" CornerRadius="12" BorderColor="Transparent">
+                <VerticalStackLayout Spacing="12">
+                    <Label Text="{Binding EstadoFinanciero}" FontSize="18" FontAttributes="Bold"
+                           TextColor="{Binding TieneExcedente, Converter={StaticResource EstadoToColorConverter}}" />
+                    <ProgressBar Progress="{Binding ProgresoCobertura}"
+                                 ProgressColor="{Binding TieneExcedente, Converter={StaticResource EstadoToColorConverter}}"
+                                 HeightRequest="14" />
+                    <Label Text="{Binding MensajeEstado}" FontSize="14" HorizontalTextAlignment="Center" />
+                </VerticalStackLayout>
+            </Frame>
+
+            
+            <Frame IsVisible="{Binding MostrarAlertaAmarilla}"
+                   BackgroundColor="{AppThemeBinding Light={StaticResource WarningCardLight}, Dark={StaticResource WarningCardDark}}"
+                   Padding="12"
+                   BorderColor="{AppThemeBinding Light={StaticResource WarningCardBorderLight}, Dark={StaticResource WarningCardBorderDark}}"
+                   CornerRadius="8">
+                <Label Text="{Binding MensajeAlerta}"
+                       TextColor="{AppThemeBinding Light={StaticResource WarningCardTextLight}, Dark={StaticResource WarningCardTextDark}}" />
+            </Frame>
+
+            
+            <Label Text="Indicadores financieros" Style="{StaticResource SubHeadline}" />
+            <Grid ColumnDefinitions="*,*" RowDefinitions="Auto,Auto,Auto" ColumnSpacing="10" RowSpacing="10">
+                <Frame Grid.Row="0" Grid.Column="0" Padding="14" HasShadow="True" CornerRadius="10">
+                    <VerticalStackLayout Spacing="4">
+                        <Label Text="Costos fijos" FontSize="11" Style="{StaticResource MutedLabel}" />
+                        <Label Text="{Binding TotalCostosFijos, StringFormat='{0:C2}'}" FontAttributes="Bold" FontSize="15" />
+                    </VerticalStackLayout>
+                </Frame>
+                <Frame Grid.Row="0" Grid.Column="1" Padding="14" HasShadow="True" CornerRadius="10">
+                    <VerticalStackLayout Spacing="4">
+                        <Label Text="Ganancia Inicial" FontSize="11" Style="{StaticResource MutedLabel}" />
+                        <Label Text="{Binding UtilidadBrutaAcumulada, StringFormat='{0:C2}'}" FontAttributes="Bold" FontSize="15" />
+                    </VerticalStackLayout>
+                </Frame>
+                <Frame Grid.Row="1" Grid.Column="0" Padding="14" HasShadow="True" CornerRadius="10">
+                    <VerticalStackLayout Spacing="4">
+                        <Label Text="Retiros" FontSize="11" Style="{StaticResource MutedLabel}" />
+                        <Label Text="{Binding TotalRetiros, StringFormat='{0:C2}'}" FontAttributes="Bold" FontSize="15" TextColor="{StaticResource WarningOrange}" />
+                    </VerticalStackLayout>
+                </Frame>
+                <Frame Grid.Row="1" Grid.Column="1" Padding="14" HasShadow="True" CornerRadius="10"
+                       BackgroundColor="{AppThemeBinding Light={StaticResource SuccessCardLight}, Dark={StaticResource SuccessCardDark}}"
+                       BorderColor="Transparent">
+                    <VerticalStackLayout Spacing="4">
+                        <Label Text="Ganancia Final" FontSize="11" TextColor="{AppThemeBinding Light={StaticResource SuccessCardTextLight}, Dark={StaticResource SuccessCardTextDark}}" />
+                        <Label Text="{Binding UtilidadReal, StringFormat='{0:C2}'}" FontAttributes="Bold" FontSize="15" TextColor="{AppThemeBinding Light={StaticResource SuccessCardTextLight}, Dark={StaticResource SuccessCardTextDark}}" />
+                    </VerticalStackLayout>
+                </Frame>
+                <Frame Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Padding="14" HasShadow="True" CornerRadius="10">
+                    <VerticalStackLayout Spacing="4">
+                        <Label Text="Capital de operación" FontSize="11" Style="{StaticResource MutedLabel}" />
+                        <Label Text="{Binding CostosDirectosAcumulados, StringFormat='{0:C2}'}" FontAttributes="Bold" FontSize="15" />
+                    </VerticalStackLayout>
+                </Frame>
+            </Grid>
+
+            
+            <Label Text="Ingresos del período" Style="{StaticResource SubHeadline}" Margin="0,8,0,0" />
+            <CollectionView ItemsSource="{Binding IngresosRecientes}" SelectionMode="None">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="models:Ingreso">
+                        <Frame Padding="12" Margin="0,4" HasShadow="True" CornerRadius="8">
+                            <VerticalStackLayout Spacing="4">
+                                <Label Text="{Binding NombreActividad}" FontAttributes="Bold" />
+                                <Label Text="{Binding Fecha, StringFormat='{0:dd/MM/yyyy}'} · Cant: {Binding Cantidad}" FontSize="12" Style="{StaticResource MutedLabel}" />
+                                <Label Text="{Binding MontoTotal, StringFormat='Total: {0:C2}'}" FontSize="12" />
+                            </VerticalStackLayout>
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+                <CollectionView.EmptyView>
+                    <Label Text="No hay ingresos este mes." HorizontalOptions="Center" Margin="0,20" Style="{StaticResource MutedLabel}" />
+                </CollectionView.EmptyView>
+            </CollectionView>
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>

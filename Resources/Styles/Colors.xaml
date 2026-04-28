@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<?xaml-comp compile="true" ?>
+<ResourceDictionary 
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+
+    
+
+    
+    <Color x:Key="BrandDarkBlue">#263B53</Color>
+    
+    <Color x:Key="BrandGreen">#2F9A55</Color>
+    <Color x:Key="BrandGreenSoft">#3FB66A</Color>
+    <Color x:Key="BrandGreenDark">#1E6B3B</Color>
+    <Color x:Key="BrandGrayBg">#EDEDED</Color>
+    <Color x:Key="BrandGrayMid">#BFC7CE</Color>
+
+    
+
+    
+    <Color x:Key="Primary">#2F9A55</Color>
+    <Color x:Key="PrimaryDark">#1E6B3B</Color>
+    <Color x:Key="Tertiary">#263B53</Color>
+
+    
+    <Color x:Key="White">#FFFFFF</Color>
+    <Color x:Key="Black">#263B53</Color>
+    <Color x:Key="OffBlack">#1C2C3E</Color>
+    <Color x:Key="MidnightBlue">#1C2C3E</Color>
+
+    
+    <Color x:Key="SurfaceLight">#EDEDED</Color>
+    <Color x:Key="SurfaceDark">#1C2C3E</Color>
+    <Color x:Key="FlyoutBackgroundLight">#FFFFFF</Color>
+    <Color x:Key="FlyoutBackgroundDark">#1C2C3E</Color>
+    <Color x:Key="FlyoutHeaderLight">#F5F7F8</Color>
+    <Color x:Key="FlyoutHeaderDark">#263B53</Color>
+
+    
+    <Color x:Key="FlyoutMenuItemTextLight">#1C2C3E</Color>
+    <Color x:Key="FlyoutMenuItemTextDark">#F1F4F7</Color>
+    <Color x:Key="FlyoutUnselectedItemLight">#5A6B7D</Color>
+    <Color x:Key="FlyoutUnselectedItemDark">#BFC7CE</Color>
+
+    
+    <Color x:Key="CardBgLight">#FFFFFF</Color>
+    <Color x:Key="CardBgDark">#263B53</Color>
+    <Color x:Key="CardBorderLight">#BFC7CE</Color>
+    <Color x:Key="CardBorderDark">#3A4F68</Color>
+
+    
+    <Color x:Key="FormSectionLight">#EDEDED</Color>
+    <Color x:Key="FormSectionDark">#3A4F68</Color>
+
+    
+    <Color x:Key="InputFieldSurfaceLight">#FFFFFF</Color>
+    <Color x:Key="InputFieldSurfaceDark">#1C2C3E</Color>
+
+    
+    <Color x:Key="SecondaryTintLight">#D7F1E0</Color>
+    <Color x:Key="SecondaryTintDark">#2F9A55</Color>
+
+    
+    <Color x:Key="InactiveCardLight">#D6DBE0</Color>
+    <Color x:Key="InactiveCardDark">#3A4F68</Color>
+
+    
+    <Color x:Key="SuccessCardLight">#D7F1E0</Color>
+    <Color x:Key="SuccessCardDark">#1E6B3B</Color>
+    <Color x:Key="SuccessCardTextLight">#2F9A55</Color>
+    <Color x:Key="SuccessCardTextDark">#6FD08F</Color>
+
+    
+    <Color x:Key="WarningCardLight">#FEF3C7</Color>
+    <Color x:Key="WarningCardDark">#78350F</Color>
+    <Color x:Key="WarningCardBorderLight">#F59E0B</Color>
+    <Color x:Key="WarningCardBorderDark">#D97706</Color>
+    <Color x:Key="WarningCardTextLight">#92400E</Color>
+    <Color x:Key="WarningCardTextDark">#FDE68A</Color>
+
+    
+    <Color x:Key="TextPrimaryLight">#263B53</Color>
+    <Color x:Key="TextPrimaryDark">#F1F4F7</Color>
+    <Color x:Key="TextSecondaryLight">#5A6B7D</Color>
+    <Color x:Key="TextSecondaryDark">#BFC7CE</Color>
+
+    
+    <Color x:Key="Gray100">#EDEDED</Color>
+    <Color x:Key="Gray200">#BFC7CE</Color>
+    <Color x:Key="Gray300">#A3ADB6</Color>
+    <Color x:Key="Gray400">#7C8894</Color>
+    <Color x:Key="Gray500">#5A6B7D</Color>
+    <Color x:Key="Gray600">#3F5266</Color>
+    <Color x:Key="Gray900">#263B53</Color>
+    <Color x:Key="Gray950">#1C2C3E</Color>
+
+    
+    <Color x:Key="CancelButtonLight">#BFC7CE</Color>
+    <Color x:Key="CancelButtonDark">#5A6B7D</Color>
+
+    
+    <Color x:Key="MensajeErrorLight">#DC2626</Color>
+    <Color x:Key="MensajeErrorDark">#FCA5A5</Color>
+    <Color x:Key="MensajeExitoLight">#2F9A55</Color>
+    <Color x:Key="MensajeExitoDark">#2F9A55</Color>
+
+    
+    <Color x:Key="Secondary">#D7F1E0</Color>
+    <Color x:Key="SecondaryDarkText">#BFC7CE</Color>
+    <Color x:Key="Magenta">#2F9A55</Color>
+    <Color x:Key="SuccessGreen">#2F9A55</Color>
+    <Color x:Key="SuccessLight">#2F9A55</Color>
+    <Color x:Key="WarningOrange">#D97706</Color>
+    <Color x:Key="DangerRed">#DC2626</Color>
+    <Color x:Key="DangerLight">#EF4444</Color>
+
+    <SolidColorBrush x:Key="PrimaryBrush" Color="{StaticResource Primary}"/>
+    <SolidColorBrush x:Key="SecondaryBrush" Color="{StaticResource Secondary}"/>
+    <SolidColorBrush x:Key="TertiaryBrush" Color="{StaticResource Tertiary}"/>
+    <SolidColorBrush x:Key="WhiteBrush" Color="{StaticResource White}"/>
+    <SolidColorBrush x:Key="BlackBrush" Color="{StaticResource Black}"/>
+    <SolidColorBrush x:Key="Gray100Brush" Color="{StaticResource Gray100}"/>
+    <SolidColorBrush x:Key="Gray200Brush" Color="{StaticResource Gray200}"/>
+    <SolidColorBrush x:Key="Gray300Brush" Color="{StaticResource Gray300}"/>
+    <SolidColorBrush x:Key="Gray400Brush" Color="{StaticResource Gray400}"/>
+    <SolidColorBrush x:Key="Gray500Brush" Color="{StaticResource Gray500}"/>
+    <SolidColorBrush x:Key="Gray600Brush" Color="{StaticResource Gray600}"/>
+    <SolidColorBrush x:Key="BrandDarkBlueBrush" Color="{StaticResource BrandDarkBlue}"/>
+    <SolidColorBrush x:Key="BrandGreenBrush" Color="{StaticResource BrandGreen}"/>
+    <SolidColorBrush x:Key="BrandGreenSoftBrush" Color="{StaticResource BrandGreenSoft}"/>
+    <SolidColorBrush x:Key="BrandGrayBgBrush" Color="{StaticResource BrandGrayBg}"/>
+    <SolidColorBrush x:Key="BrandGrayMidBrush" Color="{StaticResource BrandGrayMid}"/>
+</ResourceDictionary>
